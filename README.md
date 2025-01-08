@@ -1,5 +1,7 @@
 ## Deployment of delta changes between source and current branch
 
+The script should be placed in the top folder of the project on the same level as sfdx-project.json
+
 If there is a need to deploy the diffs to environment, then we can use the below command to deploy the changes to the environment.<br>
 The process compares the last successfully deployed commit from the source branch with current changes<br>
 If branch is not specified in `.deltaPackage.{orgAlias}.env` it will ask for the branch name to compare the changes with
