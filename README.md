@@ -8,7 +8,7 @@ If branch is not specified in `.deltaPackage.{orgAlias}.env` it will ask for the
 
 Sample:
 
-```bash .deltaDeploy {targetOrgAlias}```
+```bash deltaDeploy {targetOrgAlias}```
 
 If the targetOrgAlias is not specified, it will ask for the target org alias to deploy the changes to<br>
 
