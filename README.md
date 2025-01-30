@@ -1,7 +1,6 @@
 # Deployment of delta changes between source and current branch
 
 ## Overview
-**Please, use the deploy_delta_win_version.sh for windows machines. It does not have validation on ignore files and work only with single package structure force-app**
 This script facilitates incremental deployments of Salesforce metadata by detecting changes between the current branch and a reference commit (last successful deployment or specified branch). It generates a package.xml manifest for the delta and deploys it to a target org.
 
 ## Prerequisites
@@ -14,7 +13,7 @@ This script facilitates incremental deployments of Salesforce metadata by detect
 
 Basic Command
 
-```bash deploy_delta.sh {targetOrgAlias}```
+```node deploy_delta.js {targetOrgAlias}```
 
 {targetOrgAlias}: Alias of the target Salesforce org. If omitted, the script will prompt for it.
 
