@@ -18,21 +18,22 @@ function read_sfdx_project() {
     }
 }
 
-async function initState(alias) {
-    SALESFORCE_ALIAS = alias || await prompt('Please, specify the target org alias: ');
-
-    if (!SALESFORCE_ALIAS) {
-        SALESFORCE_ALIAS = await prompt('Please, specify the target org alias: ');
-    }
+async function initState(alias, branchName) {
+    SALESFORCE_ALIAS = alias || (await prompt("Please, specify the target org alias: "));
 
     const envFilePath = path.join(TEMP_DELTA_DIR, `${SALESFORCE_ALIAS}.env`);
     if (fs.existsSync(envFilePath)) {
         // Load the last successful deployment hash from the .env file
-        process.env = { ...process.env, ...parseEnv(fs.readFileSync(envFilePath, 'utf-8')) };
+        process.env = {
+            ...process.env,
+            ...parseEnv(fs.readFileSync(envFilePath, "utf-8"))
+        };
     }
 
     if (!process.env.LAST_SUCCESS_DEPLOYMENT_HASH) {
-        const branchName = await prompt('Please, specify the target branch: ');
+        if (!branchName) {
+            branchName = await prompt("Please, specify the target branch: ");
+        }
         LAST_COMMIT = execSync(`git log -n 1 --pretty=format:"%H" ${branchName}`).toString().trim();
     } else {
         LAST_COMMIT = process.env.LAST_SUCCESS_DEPLOYMENT_HASH;
@@ -193,7 +194,8 @@ function prompt(question) {
 
 async function main() {
     const alias = process.argv[2];
-    await initState(alias);
+    const branchName = process.argv[3];
+    await initState(alias, branchName);
     await preparePackageXmlForChangedFiles();
     deployDeltaUsingPackageXmlAndUpdateLastSuccessCommit();
 }
